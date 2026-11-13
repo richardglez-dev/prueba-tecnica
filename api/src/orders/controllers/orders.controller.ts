@@ -20,6 +20,18 @@ export class OrdersController {
         'El chatId y el identificador del producto son obligatorios'
       );
     }
+     
+     //Validacionesss
+    //Precio > 0
+  if (
+    typeof datos.product.price !== 'number' ||
+    !Number.isFinite(datos.product.price) ||
+    datos.product.price <= 0
+  ) {
+    throw new BadRequestException(
+      'El precio del producto debe ser mayor que cero'
+    );
+  }
 
     return this.ordersService.registrarPedido(datos);
   }
@@ -28,4 +40,6 @@ export class OrdersController {
   obtenerPedidoPorId(@Param('id') id: string) {
     return this.ordersService.obtenerPedidoPorId(id);
   }
+
+
 }

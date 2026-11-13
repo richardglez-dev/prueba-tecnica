@@ -1,3 +1,4 @@
+
 # Dependencias
 node_modules/
 
@@ -10,6 +11,30 @@ node_modules/
 dist/
 build/
 .next/
+.expo/
+web-build/
 
 # Logs
 *.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuraciones locales
+.claude/
+.vscode/
+
+# Android - archivos generados
+android/.gradle/
+android/local.properties
+android/build/
+android/app/build/
+
+# Credenciales
+*.keystore
+*.jks
+*.pem

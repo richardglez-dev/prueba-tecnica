@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException,ConflictException } from '@nestjs/common';
 import { CreateOrderDto } from '../dto/create-order.dto';
 import { Order } from '../interfaces/order.interface';
 import { randomUUID } from 'crypto';
@@ -7,7 +7,20 @@ import { randomUUID } from 'crypto';
 export class OrdersService {
   private pedidos: Order[] = [];
 
-    registrarPedido(datos: CreateOrderDto): Order {
+  
+
+  registrarPedido(datos: CreateOrderDto): Order {
+
+    const pedidoExistente = this.pedidos.find(
+      pedido =>
+        pedido.chatId === datos.chatId &&
+        pedido.messageId === datos.messageId
+    );
+
+    if (pedidoExistente) {
+      throw new ConflictException('Este pedido ya existe');
+    }
+
     const pedido: Order = {
       id: randomUUID(),
       chatId: datos.chatId,
@@ -21,6 +34,8 @@ export class OrdersService {
 
     return pedido;
   }
+
+
 
   obtenerPedidoPorId(id: string): Order {
     const pedido = this.pedidos.find(p => p.id === id);
